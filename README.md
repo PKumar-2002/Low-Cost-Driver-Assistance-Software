@@ -1,248 +1,140 @@
-<p align="center">
-  <img src="docs/banner.png" alt="Advanced Self Driving" width="700"/>
-</p>
+**1. Description**
 
-<p align="center">
-  <a href="https://github.com/yourusername/advanced-self-driving/actions"><img src="https://img.shields.io/github/actions/workflow/status/yourusername/advanced-self-driving/ci.yml?branch=main" alt="CI Status"></a>
-  <a href="https://pypi.org/project/advanced-self-driving/"><img src="https://img.shields.io/pypi/v/advanced-self-driving" alt="PyPI Version"></a>
-  <a href="#license"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
-  <a href="#requirements"><img src="https://img.shields.io/badge/python-3.7%2B-blue" alt="Python 3.7+"></a>
-</p>
+This project is an **Advanced Self-Driving** demonstration application built with Python and Tkinter. It integrates real‑time video capture, lane detection, object detection (using YOLOv8), developer and learner modes, text‑to‑speech warnings, and an interactive map widget. Key features include:
 
----
-
-## 📋 Table of Contents
-
-* [✨ Features](#-features)
-* [🖼️ Demo](#️-demo)
-* [⚙️ Requirements](#️-requirements)
-* [🚀 Quick Start](#-quick-start)
-* [🛠️ Usage & Modes](#️-usage--modes)
-
-  * [▶️ Live Preview](#️-live-preview)
-  * [🔧 Developer Mode](#️-developer-mode)
-  * [🎓 Learner Mode](#️-learner-mode)
-* [🗃️ Dataset Recording](#️-dataset-recording)
-* [❓ Troubleshooting](#-troubleshooting)
-* [🤝 Contributing](#-contributing)
-* [📄 License](#-license)
-* [🙏 Acknowledgments](#-acknowledgments)
+* **Lane Detection & Smoothing**: Detects lane lines via perspective warp, color thresholding, sliding windows, RANSAC for robust fitting, and applies exponential smoothing to reduce jitter.
+* **Lane Departure Warnings**: Calculates vehicle offset from lane center and issues audio/visual warnings when crossing lane boundaries.
+* **Object Detection**: Runs a YOLOv8 model on each frame to detect and count classes like cars, persons, motorbikes, etc., drawing bounding boxes and labels.
+* **Driver Assistance Mode**: Combines lane detection and object detection for a comprehensive assistance mode.
+* **Developer Mode**: Displays real‑time FPS, developer logs, and matplotlib plots of lane indicators and object counts, alongside a live-updating map (TkinterMapView).
+* **Learner Mode**: A simplified mode (placeholder for customized learner warnings).
+* **Dataset Recording**: Optionally records frames, fitted lane coefficients, and object counts to a timestamped CSV and saves images for offline analysis.
+* **Text‑to‑Speech**: Uses `pyttsx3` to announce status changes and warnings aloud.
+* **Customizable UI**: Fully interactive Tkinter interface with buttons to toggle each feature.
 
 ---
 
-## ✨ Features
+**2. README.md**
 
-<p align="center">
-  <img src="docs/icons/lane.png" alt="Lane" width="48"/>  
-  <img src="docs/icons/object.png" alt="Object" width="48"/>  
-  <img src="docs/icons/assistant.png" alt="Assistant" width="48"/>  
-  <img src="docs/icons/developer.png" alt="Developer" width="48"/>  
-  <img src="docs/icons/learner.png" alt="Learner" width="48"/>  
-  <img src="docs/icons/tts.png" alt="TTS" width="48"/>  
-</p>
+````markdown
+# Advanced Self Driving
 
-* **🚧 Lane Detection & Smoothing**
+An interactive Python/Tkinter application demonstrating real‑time lane detection, object detection, driver assistance features, and developer/learner modes with audio feedback and dataset recording.
 
-  * Perspective transform, white & yellow thresholding
-  * Sliding-window search + RANSAC for robust fits
-  * Exponential smoothing of lane curves
-  * Auto mode-switching: *straight* ↔ *curved*
+## Features
 
-* **⚠️ Lane Departure Warning**
+- **Lane Detection & Smoothing**  
+  - Perspective transform, color thresholding (white & yellow), sliding-window search  
+  - Exponential smoothing of polynomial fits  
+  - Automatic mode switching between straight and curved segments  
 
-  * Calculates offset from lane center
-  * On-screen & audio alerts via **pyttsx3**
+- **Lane Departure Warning**  
+  - Calculates vehicle offset from lane center  
+  - Audio and visual warnings when drifting too far  
 
-* **🎯 Object Detection (YOLOv8)**
+- **Object Detection (YOLOv8)**  
+  - Real‑time bounding boxes and counts for people, cars, motorcycles, etc.  
+  - Developer log of object counts  
 
-  * Realtime bounding boxes & counts (cars, people, bikes…)
-  * Developer log of detection counts
+- **Driver Assistance Mode**  
+  - Combines lane detection and object detection  
+  - Unified toggle for full assistance  
 
-* **🛡️ Driver Assistance Mode**
+- **Developer Mode**  
+  - Live FPS counter  
+  - Matplotlib plots of lane indicators and object counts  
+  - Live map view (requires internet) via `tkintermapview`  
+  - Developer log widget  
 
-  * Unified lane + object detection
-  * Single toggle for full driving aid
+- **Learner Mode**  
+  - Simplified object detection with placeholder for custom learner warnings  
 
-* **👨‍💻 Developer Mode**
+- **Dataset Recording**  
+  - Save frames, lane fits, and object counts to `./recorded_dataset/metadata.csv`  
+  - Timestamped image captures  
 
-  <details>
-    <summary>Click to expand 🚀</summary>
+- **Text‑to‑Speech Notifications**  
+  - Uses `pyttsx3` for audible status updates and warnings  
 
-  * Live FPS counter
-  * Matplotlib plots of lane & object stats
-  * Embedded interactive map (via `tkintermapview`)
-  * Scrollable developer log widget
+## Requirements
 
-  </details>
+- Python 3.7+  
+- [OpenCV](https://pypi.org/project/opencv-python/)  
+- [Pillow](https://pypi.org/project/Pillow/)  
+- [NumPy](https://pypi.org/project/numpy/)  
+- [Ultralytics YOLO](https://pypi.org/project/ultralytics/) (for YOLOv8)  
+- [tkintermapview](https://pypi.org/project/tkintermapview/)  
+- [Matplotlib](https://pypi.org/project/matplotlib/)  
+- [scikit-learn](https://pypi.org/project/scikit-learn/)  
+- [pyttsx3](https://pypi.org/project/pyttsx3/)  
 
-* **🎓 Learner Mode**
+## Installation
 
-  * Simplified detection + custom learner alerts
-
-* **📦 Dataset Recording**
-
-  * Save frames, lane fits & object counts
-  * Timestamped CSV & image dumps
-
-* **🔊 Text‑to‑Speech**
-
-  * Audible status updates & warnings
-
----
-
-## 🖼️ Demo
-
-<p align="center">
-  <!-- Replace with actual GIF/demo -->
-  <img src="docs/demo.gif" alt="Demo" width="800"/>
-</p>
-
----
-
-## ⚙️ Requirements
-
-Install via pip:
-
-```bash
-pip install -r requirements.txt
-```
-
-<details>
-  <summary>Python Packages</summary>
-
-```
-opencv-python
-Pillow
-numpy
-ultralytics      # YOLOv8
-tkintermapview
-matplotlib
-scikit-learn
-pyttsx3
-```
-
-</details>
-
----
-
-## 🚀 Quick Start
-
-1. **Clone the repo**
-
+1. **Clone the repository**  
    ```bash
    git clone https://github.com/yourusername/advanced-self-driving.git
    cd advanced-self-driving
-   ```
+````
 
-2. **Download the YOLOv8 model**
-
-   ```bash
-   # Place yolov8n.pt here, or update path in main.py
-   wget https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt
-   ```
-
-3. **Run the application**
+2. **Install dependencies**
 
    ```bash
-   python main.py
+   pip install -r requirements.txt
    ```
 
----
+3. **Download YOLOv8 model**
+   Place `yolov8n.pt` in the project root directory, or update the path in the script:
 
-## 🛠️ Usage & Modes
+   ```python
+   yolo_model = YOLO("path/to/yolov8n.pt")
+   ```
 
-### ▶️ Live Preview
+## Usage
 
-| Button                         | Action                          |
-| ------------------------------ | ------------------------------- |
-| **Start Camera**               | Begin video capture             |
-| **Activate Lane Assistance**   | Show lanes & departure warnings |
-| **Activate Object Detection**  | Show YOLO boxes & counts        |
-| **Activate Driver Assistance** | Combined lane + object mode     |
+```bash
+python main.py
+```
 
-### 🔧 Developer Mode
+* **Start/Stop Camera**: Click **Start Camera** to begin video capture.
+* **Lane Assistance**: Toggle **Activate Lane Assistance** to see lane overlays and warnings.
+* **Object Detection**: Toggle **Activate Object Detection** for YOLOv8 bounding boxes.
+* **Driver Assistance**: Toggle **Activate Driver Assistance** to run both lane and object detection together.
+* **Developer Mode**: Toggle **Activate Developer Mode** to view FPS, logs, plots, and map.
+* **Learner Mode**: Toggle **Activate Learner Mode** for a learner‑focused interface.
+* **Recording**: Toggle **Start Recording** to save frames and metadata in `./recorded_dataset`.
 
-Toggle **Activate Developer Mode** to display:
+## Project Structure
 
-* **FPS** counter
-* **Plots** of lane indicator & counts
-* **Interactive Map** centered on Hyderabad
-* **Console Log** of detection stats
+```
+advanced-self-driving/
+├── main.py
+├── yolov8n.pt
+├── requirements.txt
+├── background.png
+├── road.png
+├── smart-car.png
+├── recorded_dataset/
+│   └── metadata.csv
+└── README.md
+```
 
-<details>
-  <summary>Sample Plot</summary>
-  <img src="docs/screenshots/plot.png" alt="Developer Plot" width="600"/>
-</details>
+## Troubleshooting
 
-### 🎓 Learner Mode
+* **Camera not found**: Ensure your webcam is accessible and not in use by another application.
+* **Map not loading**: `tkintermapview` requires internet access and valid tile server URLs.
+* **TTS issues**: Verify `pyttsx3` is installed and your system has a speech engine.
 
-Toggle **Activate Learner Mode** for a simplified interface. Customize learner alerts by editing the placeholder in `main.py`.
+## License
 
----
+This project is released under the [MIT License](LICENSE).
 
-## 🗃️ Dataset Recording
+## Acknowledgments
 
-Click **Start Recording** to:
+* Lane detection inspired by Udacity Self‐Driving Car Nanodegree projects
+* YOLOv8 by Ultralytics
+* Map widget by `tkintermapview`
 
-* Save each frame as `frame_YYYYMMDD_HHMMSS.png` in `./recorded_dataset/`
-* Append metadata (timestamp, mode, lane fits, object counts) to `metadata.csv`
+```
 
-<details>
-  <summary>Sample Metadata</summary>
-
-| timestamp        | filename                    | mode   | left\_fit              | right\_fit              | obj\_counts       |
-| ---------------- | --------------------------- | ------ | ---------------------- | ----------------------- | ----------------- |
-| 20250511\_153022 | frame\_20250511\_153022.png | driver | `[1.2e-4, -0.35, 250]` | `[1.1e-4, -0.33, 1020]` | `{0:2, 2:1, 3:3}` |
-
-</details>
-
----
-
-## ❓ Troubleshooting
-
-* **Camera not detected?**
-
-  * Ensure no other app uses the webcam.
-  * Test with simple OpenCV capture script.
-
-* **Map tiles not loading?**
-
-  * Check internet connectivity.
-  * Verify `tkintermapview` tile server settings.
-
-* **No audio on warnings?**
-
-  * Confirm `pyttsx3` voices installed (e.g., `espeak` on Linux).
-
----
-
-## 🤝 Contributing
-
-We ❤️ contributions!
-
-1. Fork the repo
-2. Create a feature branch
-3. Submit a PR with clear description
-
-Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).
-
----
-
-## 📄 License
-
-Distributed under the MIT License. See [LICENSE](LICENSE) for details.
-
----
-
-## 🙏 Acknowledgments
-
-* Lane detection inspired by **Udacity Self‑Driving Car Nanodegree**
-* Object detection courtesy of **Ultralytics YOLOv8**
-* Map widget by **tkintermapview**
-* TTS powered by **pyttsx3**
-
----
-
-<p align="center">
-  Made with ❤️ by Your Name
-</p>
+This README provides an overview, setup instructions, usage guide, and project structure to help you get started quickly.
+```
