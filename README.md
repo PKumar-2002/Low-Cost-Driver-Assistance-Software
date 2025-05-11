@@ -1,4 +1,4 @@
-# Advanced Self Driving
+# Advanced Self Driving - A Low Cost Driver Assistance Software
 
 An interactive Python/Tkinter application demonstrating real‑time lane detection, object detection, driver assistance features, and developer/learner modes with audio feedback and dataset recording.
 
