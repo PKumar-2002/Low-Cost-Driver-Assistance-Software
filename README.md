@@ -1,8 +1,8 @@
-# Advanced Self Driving - A Low Cost Driver Assistance Software
+# 🚗 Advanced Self Driving - A Low Cost Driver Assistance Software
 
 An interactive Python/Tkinter application demonstrating real‑time lane detection, object detection, driver assistance features, and developer/learner modes with audio feedback and dataset recording.
 
-## Features
+## 📋 Features
 
 - **Lane Detection & Smoothing**  
   - Perspective transform, color thresholding (white & yellow), sliding-window search  
@@ -37,7 +37,7 @@ An interactive Python/Tkinter application demonstrating real‑time lane detecti
 - **Text‑to‑Speech Notifications**  
   - Uses `pyttsx3` for audible status updates and warnings  
 
-## Requirements
+## 🛠️ Requirements
 
 - Python 3.7+  
 - [OpenCV](https://pypi.org/project/opencv-python/)  
@@ -49,7 +49,7 @@ An interactive Python/Tkinter application demonstrating real‑time lane detecti
 - [scikit-learn](https://pypi.org/project/scikit-learn/)  
 - [pyttsx3](https://pypi.org/project/pyttsx3/)
 
-## Versions
+## 🚀 Versions
 
 - 1.0: Baseline implementation featuring discrete lane detection algorithms (Canny, Sobel, Hough, Kalman) accessible via separate GUI buttons.
 
